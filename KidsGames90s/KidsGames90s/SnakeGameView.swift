@@ -7,7 +7,7 @@ struct SnakeGameView: View {
     private let cellSize: CGFloat = 26
     private let controlButtonSize: CGFloat = 68
     private let controlIconSize: CGFloat = 28
-    private let gameTickInterval: TimeInterval = 0.5
+    private let gameTickInterval: TimeInterval = 0.6
 
     @State private var snake: [CGPoint] = [CGPoint(x: 10, y: 10)]
     @State private var direction: Direction = .right
