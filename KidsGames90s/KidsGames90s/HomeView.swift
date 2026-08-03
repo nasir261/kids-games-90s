@@ -7,7 +7,7 @@ struct HomeView: View {
                 Color.black.ignoresSafeArea()
 
                 VStack(spacing: 22) {
-                    Text("🎮 90s Kids Games")
+                    Text("🎮 Studio Kids Classic")
                         .font(.system(size: 36, weight: .bold, design: .monospaced))
                         .foregroundColor(.yellow)
                         .padding(.top, 14)
