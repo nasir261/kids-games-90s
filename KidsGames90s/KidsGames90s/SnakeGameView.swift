@@ -12,7 +12,7 @@ struct SnakeGameView: View {
     @State private var snake: [CGPoint] = [CGPoint(x: 10, y: 10)]
     @State private var direction: Direction = .right
     @State private var nextDirection: Direction = .right
-    @State private var food: CGPoint = CGPoint(x: 15, y: 10)
+    @State private var food: CGPoint = CGPoint(x: 14, y: 10)
     @State private var score = 0
     @State private var isGameOver = false
     @State private var isPlaying = false
