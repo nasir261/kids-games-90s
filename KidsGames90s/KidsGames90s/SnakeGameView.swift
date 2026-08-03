@@ -5,8 +5,8 @@ private enum Direction { case up, down, left, right }
 struct SnakeGameView: View {
     private let gridSize = 15
     private let cellSize: CGFloat = 26
-    private let controlButtonSize: CGFloat = 82
-    private let controlIconSize: CGFloat = 36
+    private let controlButtonSize: CGFloat = 68
+    private let controlIconSize: CGFloat = 28
     private let gameTickInterval: TimeInterval = 0.4
 
     @State private var snake: [CGPoint] = [CGPoint(x: 10, y: 10)]
@@ -57,7 +57,7 @@ struct SnakeGameView: View {
             ForEach(0..<snake.count, id: \.self) { i in
                 Rectangle()
                     .fill(i == 0 ? Color.yellow : Color.green)
-                    .frame(width: cellSize - 2, height: cellSize - 2)
+                    .frame(width: cellSize, height: cellSize)
                     .position(
                         x: (snake[i].x + 0.5) * cellSize,
                         y: (snake[i].y + 0.5) * cellSize
@@ -65,7 +65,7 @@ struct SnakeGameView: View {
             }
 
             Text("🍎")
-                .font(.system(size: cellSize * 0.85))
+                .font(.system(size: cellSize))
                 .position(x: (food.x + 0.5) * cellSize, y: (food.y + 0.5) * cellSize)
 
             if isGameOver {
