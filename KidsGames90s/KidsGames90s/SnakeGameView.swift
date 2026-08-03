@@ -4,7 +4,10 @@ private enum Direction { case up, down, left, right }
 
 struct SnakeGameView: View {
     private let gridSize = 15
-    private let cellSize: CGFloat = 22
+    private let cellSize: CGFloat = 26
+    private let controlButtonSize: CGFloat = 82
+    private let controlIconSize: CGFloat = 36
+    private let gameTickInterval: TimeInterval = 0.4
 
     @State private var snake: [CGPoint] = [CGPoint(x: 10, y: 10)]
     @State private var direction: Direction = .right
@@ -105,7 +108,7 @@ struct SnakeGameView: View {
             arrowButton(.up,    icon: "arrow.up")
             HStack(spacing: 6) {
                 arrowButton(.left,  icon: "arrow.left")
-                Color.clear.frame(width: 68, height: 68)
+                Color.clear.frame(width: controlButtonSize, height: controlButtonSize)
                 arrowButton(.right, icon: "arrow.right")
             }
             arrowButton(.down,  icon: "arrow.down")
@@ -115,8 +118,8 @@ struct SnakeGameView: View {
     private func arrowButton(_ dir: Direction, icon: String) -> some View {
         Button { changeDirection(dir) } label: {
             Image(systemName: icon)
-                .font(.system(size: 28, weight: .bold))
-                .frame(width: 68, height: 68)
+                .font(.system(size: controlIconSize, weight: .bold))
+                .frame(width: controlButtonSize, height: controlButtonSize)
                 .background(Color.green.opacity(0.85))
                 .foregroundColor(.white)
                 .cornerRadius(12)
@@ -129,7 +132,7 @@ struct SnakeGameView: View {
     private func startGame() {
         isPlaying = true
         isGameOver = false
-        gameTimer = Timer.scheduledTimer(withTimeInterval: 0.28, repeats: true) { _ in
+        gameTimer = Timer.scheduledTimer(withTimeInterval: gameTickInterval, repeats: true) { _ in
             moveSnake()
         }
     }
