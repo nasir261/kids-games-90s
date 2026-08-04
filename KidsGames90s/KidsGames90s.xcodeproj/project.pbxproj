@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AA0000010000001 /* KidsGames90sApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0001010000001 /* KidsGames90sApp.swift */; };
+		AA0000010000001 /* KidsGamesClassicsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0001010000001 /* KidsGamesClassicsApp.swift */; };
 		AA0000010000002 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0001010000002 /* HomeView.swift */; };
 		AA0000010000003 /* SnakeGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0001010000003 /* SnakeGameView.swift */; };
 		AA0000010000004 /* MemoryMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0001010000004 /* MemoryMatchView.swift */; };
@@ -24,8 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AA0001010000000 /* KidsGames90s.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KidsGames90s.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA0001010000001 /* KidsGames90sApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KidsGames90sApp.swift; sourceTree = "<group>"; };
+		AA0001010000000 /* KidsGamesClassics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KidsGamesClassics.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA0001010000001 /* KidsGamesClassicsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KidsGamesClassicsApp.swift; sourceTree = "<group>"; };
 		AA0001010000002 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		AA0001010000003 /* SnakeGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnakeGameView.swift; sourceTree = "<group>"; };
 		AA0001010000004 /* MemoryMatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryMatchView.swift; sourceTree = "<group>"; };
@@ -55,7 +55,7 @@
 		AA00FAFA0000001 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AA0001010000000 /* KidsGames90s.app */,
+				AA0001010000000 /* KidsGamesClassics.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -63,15 +63,15 @@
 		AA00FAF80000001 = {
 			isa = PBXGroup;
 			children = (
-				AA00FAF70000001 /* KidsGames90s */,
+				AA00FAF70000001 /* KidsGamesClassics */,
 				AA00FAFA0000001 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		AA00FAF70000001 /* KidsGames90s */ = {
+		AA00FAF70000001 /* KidsGamesClassics */ = {
 			isa = PBXGroup;
 			children = (
-				AA0001010000001 /* KidsGames90sApp.swift */,
+				AA0001010000001 /* KidsGamesClassicsApp.swift */,
 				AA0001010000002 /* HomeView.swift */,
 				AA0001010000003 /* SnakeGameView.swift */,
 				AA0001010000004 /* MemoryMatchView.swift */,
@@ -92,9 +92,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AA00FAF60000001 /* KidsGames90s */ = {
+		AA00FAF60000001 /* KidsGamesClassics */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AA00FAF50000001 /* Build configuration list for PBXNativeTarget "KidsGames90s" */;
+			buildConfigurationList = AA00FAF50000001 /* Build configuration list for PBXNativeTarget "KidsGamesClassics" */;
 			buildPhases = (
 				AA00FAFB0000001 /* Frameworks */,
 				AA00FAFC0000001 /* Sources */,
@@ -104,9 +104,9 @@
 			);
 			dependencies = (
 			);
-			name = KidsGames90s;
-			productName = KidsGames90s;
-			productReference = AA0001010000000 /* KidsGames90s.app */;
+			name = KidsGamesClassics;
+			productName = "Kids Games Classics";
+			productReference = AA0001010000000 /* KidsGamesClassics.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -124,7 +124,7 @@
 					};
 				};
 			};
-			buildConfigurationList = AA00FAF40000001 /* Build configuration list for PBXProject "KidsGames90s" */;
+			buildConfigurationList = AA00FAF40000001 /* Build configuration list for PBXProject "KidsGamesClassics" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -137,7 +137,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AA00FAF60000001 /* KidsGames90s */,
+				AA00FAF60000001 /* KidsGamesClassics */,
 			);
 		};
 /* End PBXProject section */
@@ -163,7 +163,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA0000010000001 /* KidsGames90sApp.swift in Sources */,
+				AA0000010000001 /* KidsGamesClassicsApp.swift in Sources */,
 				AA0000010000002 /* HomeView.swift in Sources */,
 				AA0000010000003 /* SnakeGameView.swift in Sources */,
 				AA0000010000004 /* MemoryMatchView.swift in Sources */,
@@ -333,7 +333,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AA00FAF40000001 /* Build configuration list for PBXProject "KidsGames90s" */ = {
+		AA00FAF40000001 /* Build configuration list for PBXProject "KidsGamesClassics" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AA00FAF30000001 /* Debug */,
@@ -342,7 +342,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AA00FAF50000001 /* Build configuration list for PBXNativeTarget "KidsGames90s" */ = {
+		AA00FAF50000001 /* Build configuration list for PBXNativeTarget "KidsGamesClassics" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AA00FAF10000001 /* Debug */,
