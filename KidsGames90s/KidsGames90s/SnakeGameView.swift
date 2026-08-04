@@ -35,6 +35,10 @@ struct SnakeGameView: View {
 
                 boardView
 
+                if !isPlaying && !isGameOver {
+                    startButton(label: "Tap to Start! 🎮") { startGame() }
+                }
+
                 dPad
 
                 Spacer()
@@ -72,11 +76,6 @@ struct SnakeGameView: View {
                 gameOverOverlay
             }
 
-            if !isPlaying && !isGameOver {
-                VStack(spacing: 180) {
-                    startButton(label: "Tap to Start! 🎮") { startGame() }
-                }
-            }
         }
         .frame(width: boardSize, height: boardSize)
         .clipped()
