@@ -80,6 +80,10 @@
 				AA0001010000007 /* BreakoutView.swift */,
 				AA0001010000009 /* GameAudioPlayer.swift */,
 				AA0001010000010 /* snake-train.wav */,
+				AA0001010000011 /* memory-match.wav */,
+				AA0001010000012 /* whack-a-mole.wav */,
+				AA0001010000013 /* pong.wav */,
+				AA0001010000014 /* breakout.wav */,
 				AA0001010000008 /* Assets.xcassets */,
 			);
 			path = KidsGames90s;
