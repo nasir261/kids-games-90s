@@ -64,7 +64,11 @@ struct WhackAMoleView: View {
             .padding(.top)
         }
         .navigationBarTitleDisplayMode(.inline)
-        .onDisappear { stopTimers() }
+        .onAppear { GameAudioPlayer.shared.play(track: "whack-a-mole.wav") }
+        .onDisappear {
+            stopTimers()
+            GameAudioPlayer.shared.stop()
+        }
     }
 
     // MARK: – Game Over card

@@ -1,4 +1,4 @@
-# 🎮 Studio Kids Classic
+# 🎮 Kids Game Classics
 
 Classic 1990s mobile games for children aged 5–6, built as an iOS SwiftUI app.
 

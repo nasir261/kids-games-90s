@@ -27,7 +27,11 @@ struct PongView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        .onDisappear { gameTimer?.invalidate() }
+        .onAppear { GameAudioPlayer.shared.play(track: "pong.wav") }
+        .onDisappear {
+            gameTimer?.invalidate()
+            GameAudioPlayer.shared.stop()
+        }
     }
 
     // MARK: – Header

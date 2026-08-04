@@ -7,12 +7,12 @@ struct HomeView: View {
                 Color.black.ignoresSafeArea()
 
                 VStack(spacing: 22) {
-                    Text("🎮 Studio Kids Classic")
+                    Text("🎮 Kids Game Classics")
                         .font(.system(size: 36, weight: .bold, design: .monospaced))
                         .foregroundColor(.yellow)
                         .padding(.top, 14)
 
-                    GameMenuButton(title: "🐍  Snake",        color: .green,  destination: AnyView(SnakeGameView()))
+                    GameMenuButton(title: "🐍  Snake Train",  color: .green,  destination: AnyView(SnakeGameView()))
                     GameMenuButton(title: "🃏  Memory Match", color: .blue,   destination: AnyView(MemoryMatchView()))
                     GameMenuButton(title: "🔨  Whack-a-Mole", color: .orange, destination: AnyView(WhackAMoleView()))
                     GameMenuButton(title: "🏓  Pong",         color: .purple, destination: AnyView(PongView()))

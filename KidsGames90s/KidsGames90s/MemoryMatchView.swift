@@ -54,7 +54,11 @@ struct MemoryMatchView: View {
             .padding(.top)
         }
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear { setupGame() }
+        .onAppear {
+            setupGame()
+            GameAudioPlayer.shared.play(track: "memory-match.wav")
+        }
+        .onDisappear { GameAudioPlayer.shared.stop() }
     }
 
     // MARK: – Win banner

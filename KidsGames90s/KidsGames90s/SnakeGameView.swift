@@ -23,7 +23,7 @@ struct SnakeGameView: View {
             Color.black.ignoresSafeArea()
             VStack(spacing: 14) {
                 HStack {
-                    Text("🐍 Snake")
+                    Text("🐍 Snake Train")
                         .font(.system(size: 22, weight: .bold, design: .monospaced))
                         .foregroundColor(.yellow)
                     Spacer()
@@ -46,7 +46,11 @@ struct SnakeGameView: View {
             .padding(.top)
         }
         .navigationBarTitleDisplayMode(.inline)
-        .onDisappear { gameTimer?.invalidate() }
+        .onAppear { GameAudioPlayer.shared.play(track: "snake-train.wav") }
+        .onDisappear {
+            gameTimer?.invalidate()
+            GameAudioPlayer.shared.stop()
+        }
     }
 
     // MARK: – Board
