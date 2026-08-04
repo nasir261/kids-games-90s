@@ -1,6 +1,6 @@
 workflows:
   ios-app-store:
-    name: KidsGames90s — App Store
+    name: KidsGamesClassics — App Store
     max_build_duration: 60
     instance_type: mac_mini_m2
 
@@ -10,7 +10,7 @@ workflows:
         bundle_identifier: com.kids.games90s
       vars:
         XCODE_PROJECT: KidsGames90s/KidsGames90s.xcodeproj
-        XCODE_SCHEME: KidsGames90s
+        XCODE_SCHEME: KidsGamesClassics
         BUNDLE_ID: com.kids.games90s
         APP_STORE_APPLE_ID: $APP_STORE_APPLE_ID   # set in Codemagic environment variables
       xcode: latest
@@ -37,14 +37,14 @@ workflows:
             -configuration Release \
             -sdk iphoneos \
             -destination "generic/platform=iOS" \
-            -archivePath build/KidsGames90s.xcarchive \
+            -archivePath build/KidsGamesClassics.xcarchive \
             archive
 
       - name: Export IPA
         script: |
           xcodebuild \
             -exportArchive \
-            -archivePath build/KidsGames90s.xcarchive \
+            -archivePath build/KidsGamesClassics.xcarchive \
             -exportPath build/ipa \
             -exportOptionsPlist /usr/local/share/codemagic/ExportOptions/ExportOptions-app-store.plist
 

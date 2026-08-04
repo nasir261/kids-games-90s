@@ -4,12 +4,15 @@ private enum Direction { case up, down, left, right }
 
 struct SnakeGameView: View {
     private let gridSize = 15
-    private let cellSize: CGFloat = 22
+    private let cellSize: CGFloat = 26
+    private let controlButtonSize: CGFloat = 68
+    private let controlIconSize: CGFloat = 28
+    private let gameTickInterval: TimeInterval = 0.6
 
     @State private var snake: [CGPoint] = [CGPoint(x: 10, y: 10)]
     @State private var direction: Direction = .right
     @State private var nextDirection: Direction = .right
-    @State private var food: CGPoint = CGPoint(x: 15, y: 10)
+    @State private var food: CGPoint = CGPoint(x: 14, y: 10)
     @State private var score = 0
     @State private var isGameOver = false
     @State private var isPlaying = false
@@ -20,7 +23,7 @@ struct SnakeGameView: View {
             Color.black.ignoresSafeArea()
             VStack(spacing: 14) {
                 HStack {
-                    Text("🐍 Snake")
+                    Text("🐍 Snake Train")
                         .font(.system(size: 22, weight: .bold, design: .monospaced))
                         .foregroundColor(.yellow)
                     Spacer()
@@ -32,6 +35,10 @@ struct SnakeGameView: View {
 
                 boardView
 
+                if !isPlaying && !isGameOver {
+                    startButton(label: "Tap to Start! 🎮") { startGame() }
+                }
+
                 dPad
 
                 Spacer()
@@ -39,7 +46,11 @@ struct SnakeGameView: View {
             .padding(.top)
         }
         .navigationBarTitleDisplayMode(.inline)
-        .onDisappear { gameTimer?.invalidate() }
+        .onAppear { GameAudioPlayer.shared.play(track: "snake-train.wav") }
+        .onDisappear {
+            gameTimer?.invalidate()
+            GameAudioPlayer.shared.stop()
+        }
     }
 
     // MARK: – Board
@@ -54,7 +65,7 @@ struct SnakeGameView: View {
             ForEach(0..<snake.count, id: \.self) { i in
                 Rectangle()
                     .fill(i == 0 ? Color.yellow : Color.green)
-                    .frame(width: cellSize - 2, height: cellSize - 2)
+                    .frame(width: cellSize, height: cellSize)
                     .position(
                         x: (snake[i].x + 0.5) * cellSize,
                         y: (snake[i].y + 0.5) * cellSize
@@ -62,16 +73,13 @@ struct SnakeGameView: View {
             }
 
             Text("🍎")
-                .font(.system(size: cellSize * 0.85))
+                .font(.system(size: cellSize))
                 .position(x: (food.x + 0.5) * cellSize, y: (food.y + 0.5) * cellSize)
 
             if isGameOver {
                 gameOverOverlay
             }
 
-            if !isPlaying && !isGameOver {
-                startButton(label: "Tap to Start! 🎮") { startGame() }
-            }
         }
         .frame(width: boardSize, height: boardSize)
         .clipped()
@@ -105,7 +113,7 @@ struct SnakeGameView: View {
             arrowButton(.up,    icon: "arrow.up")
             HStack(spacing: 6) {
                 arrowButton(.left,  icon: "arrow.left")
-                Color.clear.frame(width: 68, height: 68)
+                Color.clear.frame(width: controlButtonSize, height: controlButtonSize)
                 arrowButton(.right, icon: "arrow.right")
             }
             arrowButton(.down,  icon: "arrow.down")
@@ -115,8 +123,8 @@ struct SnakeGameView: View {
     private func arrowButton(_ dir: Direction, icon: String) -> some View {
         Button { changeDirection(dir) } label: {
             Image(systemName: icon)
-                .font(.system(size: 28, weight: .bold))
-                .frame(width: 68, height: 68)
+                .font(.system(size: controlIconSize, weight: .bold))
+                .frame(width: controlButtonSize, height: controlButtonSize)
                 .background(Color.green.opacity(0.85))
                 .foregroundColor(.white)
                 .cornerRadius(12)
@@ -129,7 +137,7 @@ struct SnakeGameView: View {
     private func startGame() {
         isPlaying = true
         isGameOver = false
-        gameTimer = Timer.scheduledTimer(withTimeInterval: 0.28, repeats: true) { _ in
+        gameTimer = Timer.scheduledTimer(withTimeInterval: gameTickInterval, repeats: true) { _ in
             moveSnake()
         }
     }
