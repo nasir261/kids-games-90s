@@ -73,7 +73,9 @@ struct SnakeGameView: View {
             }
 
             if !isPlaying && !isGameOver {
-                startButton(label: "Tap to Start! 🎮") { startGame() }
+                VStack(spacing: 180) {
+                    startButton(label: "Tap to Start! 🎮") { startGame() }
+                }
             }
         }
         .frame(width: boardSize, height: boardSize)
