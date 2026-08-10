@@ -1,4 +1,4 @@
-# 🎮 90s Kids Games
+# 🎮 Cozy Sleep Time Games
 
 Classic 1990s mobile games for children aged 5–6, built as an iOS SwiftUI app.
 
@@ -6,11 +6,11 @@ Classic 1990s mobile games for children aged 5–6, built as an iOS SwiftUI app.
 
 | Game | Description |
 |------|-------------|
-| 🐍 **Snake** | Grid-based snake with D-pad controls, growing tail and apple food |
-| 🃏 **Memory Match** | 4×4 emoji card grid with flip animation and match detection |
-| 🔨 **Whack-a-Mole** | 3×3 mole grid, 30-second timed rounds, score tracking |
-| 🏓 **Pong** | Player vs CPU with drag-to-move paddle and ball physics |
-| 🧱 **Breakout** | 4-row coloured bricks, draggable paddle, 3 lives system |
+| 🐍 **Sleepy Apple Muncher** | Grid-based snake with D-pad controls, growing tail and apple food |
+| 🃏 **Sleepy Memory Match** | 4×4 emoji card grid with flip animation and match detection |
+| 🔨 **Sleepy Mole Bash** | 3×3 mole grid, 30-second timed rounds, score tracking |
+| 🏓 **Sleepy Paddle Bounce** | Player vs CPU with drag-to-move paddle and ball physics |
+| 🧱 **Sleepy Brick Blast** | 4-row coloured bricks, draggable paddle, 3 lives system |
 
 ## Requirements
 
@@ -19,7 +19,7 @@ Classic 1990s mobile games for children aged 5–6, built as an iOS SwiftUI app.
 
 ## Run in Xcode
 
-1. Open `KidsGames90s/KidsGames90s.xcodeproj`
+1. Open `KidsHappyClassicGames/KidsHappyClassicGames.xcodeproj`
 2. Select an iPhone simulator or your device
 3. Press ▶️ Run
 
