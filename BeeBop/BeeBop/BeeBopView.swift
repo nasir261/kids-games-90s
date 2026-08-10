@@ -57,6 +57,8 @@ struct BeeBopView: View {
     @State private var isPaused = false
     @State private var gameOver = false
     @State private var gameTimer: Timer?
+    @State private var backgroundVariant = SleepyBackgroundVariant.allCases.randomElement()!
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         ZStack {
@@ -70,7 +72,13 @@ struct BeeBopView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear { MusicPlayer.shared.play(.beeBop) }
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active { backgroundVariant = SleepyBackgroundVariant.allCases.randomElement()! }
+        }
+        .onAppear {
+            backgroundVariant = SleepyBackgroundVariant.allCases.randomElement()!
+            MusicPlayer.shared.play(.beeBop)
+        }
         .onDisappear {
             gameTimer?.invalidate()
             sleepySession.stop()
@@ -107,7 +115,17 @@ struct BeeBopView: View {
     private func gameCanvas(geo: GeometryProxy) -> some View {
         let size = geo.size
         return ZStack {
-            Rectangle().fill(Color(red: 0.53, green: 0.81, blue: 0.92))
+            switch backgroundVariant {
+            case .normal:
+                Rectangle().fill(Color(red: 0.53, green: 0.81, blue: 0.92))
+            case .alt:
+                LinearGradient(
+                    colors: [Color(red: 1.0, green: 0.6, blue: 0.4), Color(red: 0.4, green: 0.2, blue: 0.5)],
+                    startPoint: .top, endPoint: .bottom
+                )
+            case .photo:
+                SleepyPhotoBackgroundView()
+            }
 
             // Pipes rendered as flower-stem columns (top + bottom).
             ForEach(pipes) { pipe in

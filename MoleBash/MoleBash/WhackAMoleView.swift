@@ -39,14 +39,25 @@ struct WhackAMoleView: View {
     @State private var round = 0
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 14), count: 3)
+    @State private var backgroundVariant = SleepyBackgroundVariant.allCases.randomElement()!
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         ZStack {
-            LinearGradient(
-                colors: [Color(red: 0.15, green: 0.55, blue: 0.05), Color(red: 0.35, green: 0.75, blue: 0.15)],
-                startPoint: .top, endPoint: .bottom
-            )
-            .ignoresSafeArea()
+            switch backgroundVariant {
+            case .normal:
+                LinearGradient(
+                    colors: [Color(red: 0.15, green: 0.55, blue: 0.05), Color(red: 0.35, green: 0.75, blue: 0.15)],
+                    startPoint: .top, endPoint: .bottom
+                ).ignoresSafeArea()
+            case .alt:
+                LinearGradient(
+                    colors: [Color(red: 0.45, green: 0.24, blue: 0.05), Color(red: 0.65, green: 0.42, blue: 0.12)],
+                    startPoint: .top, endPoint: .bottom
+                ).ignoresSafeArea()
+            case .photo:
+                SleepyPhotoBackgroundView().ignoresSafeArea()
+            }
 
             VStack(spacing: 18) {
                 HStack {
@@ -126,7 +137,13 @@ struct WhackAMoleView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear { MusicPlayer.shared.play(.whackAMole) }
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active { backgroundVariant = SleepyBackgroundVariant.allCases.randomElement()! }
+        }
+        .onAppear {
+            backgroundVariant = SleepyBackgroundVariant.allCases.randomElement()!
+            MusicPlayer.shared.play(.whackAMole)
+        }
         .onDisappear {
             stopTimers()
             sleepySession.stop()

@@ -39,10 +39,16 @@ struct PongView: View {
     @State private var isPlaying = false
     @State private var isPaused = false
     @State private var gameTimer: Timer?
+    @State private var backgroundVariant = SleepyBackgroundVariant.allCases.randomElement()!
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
+            switch backgroundVariant {
+            case .normal: Color.black.ignoresSafeArea()
+            case .alt: Color(red: 0.10, green: 0.02, blue: 0.08).ignoresSafeArea()
+            case .photo: SleepyPhotoBackgroundView().ignoresSafeArea()
+            }
             VStack(spacing: 0) {
                 headerBar
 
@@ -52,7 +58,13 @@ struct PongView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear { MusicPlayer.shared.play(.pong) }
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active { backgroundVariant = SleepyBackgroundVariant.allCases.randomElement()! }
+        }
+        .onAppear {
+            backgroundVariant = SleepyBackgroundVariant.allCases.randomElement()!
+            MusicPlayer.shared.play(.pong)
+        }
         .onChange(of: playerScore) { center.recordScore($0, thresholds: (3, 6, 10), for: .pong) }
         .onDisappear {
             gameTimer?.invalidate()

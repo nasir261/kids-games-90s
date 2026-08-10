@@ -48,10 +48,16 @@ struct BreakoutView: View {
     @State private var gameOver = false
     @State private var won = false
     @State private var gameTimer: Timer?
+    @State private var backgroundVariant = SleepyBackgroundVariant.allCases.randomElement()!
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
+            switch backgroundVariant {
+            case .normal: Color.black.ignoresSafeArea()
+            case .alt: Color(red: 0.02, green: 0.08, blue: 0.04).ignoresSafeArea()
+            case .photo: SleepyPhotoBackgroundView().ignoresSafeArea()
+            }
             VStack(spacing: 0) {
                 headerBar
 
@@ -61,7 +67,13 @@ struct BreakoutView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear { MusicPlayer.shared.play(.breakout) }
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active { backgroundVariant = SleepyBackgroundVariant.allCases.randomElement()! }
+        }
+        .onAppear {
+            backgroundVariant = SleepyBackgroundVariant.allCases.randomElement()!
+            MusicPlayer.shared.play(.breakout)
+        }
         .onDisappear {
             gameTimer?.invalidate()
             sleepySession.stop()

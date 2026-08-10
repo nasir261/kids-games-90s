@@ -30,10 +30,16 @@ struct MemoryMatchView: View {
     @State private var moves = 0
     @State private var isChecking = false
     @State private var won = false
+    @State private var backgroundVariant = SleepyBackgroundVariant.allCases.randomElement()!
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         ZStack {
-            Color(red: 0.08, green: 0.0, blue: 0.18).ignoresSafeArea()
+            switch backgroundVariant {
+            case .normal: Color(red: 0.08, green: 0.0, blue: 0.18).ignoresSafeArea()
+            case .alt: Color(red: 0.0, green: 0.08, blue: 0.18).ignoresSafeArea()
+            case .photo: SleepyPhotoBackgroundView().ignoresSafeArea()
+            }
             VStack(spacing: 16) {
                 Text("🃏 Sleepy Memory Match")
                     .font(.system(size: 22, weight: .bold, design: .monospaced))
@@ -96,7 +102,11 @@ struct MemoryMatchView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active { backgroundVariant = SleepyBackgroundVariant.allCases.randomElement()! }
+        }
         .onAppear {
+            backgroundVariant = SleepyBackgroundVariant.allCases.randomElement()!
             setupGame()
             sleepySession.start()
             MusicPlayer.shared.play(.memoryMatch)

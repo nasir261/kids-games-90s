@@ -12,6 +12,25 @@ extension CGFloat {
     }
 }
 
+// MARK: – Background variety
+// Each game re-rolls one of these on every app open (see scenePhase re-roll).
+
+enum SleepyBackgroundVariant: CaseIterable {
+    case normal, alt, photo
+}
+
+/// Photo background used by the `.photo` variant, shared across all games.
+/// Callers that fill the whole screen should chain `.ignoresSafeArea()` themselves.
+struct SleepyPhotoBackgroundView: View {
+    var body: some View {
+        Image("SleepyPhotoBackground")
+            .resizable()
+            .scaledToFill()
+            .overlay(Color.black.opacity(0.35))
+            .clipped()
+    }
+}
+
 // MARK: – Haptics
 // Lightweight tactile feedback. Kept gentle (no hard "error" buzz) since
 // these games are for 5–6 year-olds — losing a point/life shouldn't feel

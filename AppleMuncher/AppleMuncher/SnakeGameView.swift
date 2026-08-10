@@ -18,6 +18,8 @@ struct SnakeGameView: View {
     @State private var isGameOver = false
     @State private var isPlaying = false
     @State private var gameTimer: Timer?
+    @State private var backgroundVariant = SleepyBackgroundVariant.allCases.randomElement()!
+    @Environment(\.scenePhase) private var scenePhase
 
     private var moveInterval: TimeInterval {
         switch center.difficultyLevel(for: .snake) {
@@ -29,7 +31,11 @@ struct SnakeGameView: View {
 
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
+            switch backgroundVariant {
+            case .normal: Color.black.ignoresSafeArea()
+            case .alt: Color(red: 0.03, green: 0.05, blue: 0.14).ignoresSafeArea()
+            case .photo: SleepyPhotoBackgroundView().ignoresSafeArea()
+            }
             VStack(spacing: 14) {
                 HStack {
                     Text("🐍 Sleepy Apple Muncher")
@@ -56,8 +62,13 @@ struct SnakeGameView: View {
             .padding(.top)
         }
         .navigationBarTitleDisplayMode(.inline)
-
-        .onAppear { MusicPlayer.shared.play(.snake) }
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active { backgroundVariant = SleepyBackgroundVariant.allCases.randomElement()! }
+        }
+        .onAppear {
+            backgroundVariant = SleepyBackgroundVariant.allCases.randomElement()!
+            MusicPlayer.shared.play(.snake)
+        }
         .onChange(of: sleepySession.elapsed) { _ in
             guard isPlaying, !sleepySession.hasEnded else { return }
             restartMoveTimer()
