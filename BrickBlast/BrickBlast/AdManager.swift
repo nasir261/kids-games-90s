@@ -71,6 +71,11 @@ private extension AdManager {
 
     func gatherConsentAndLoadAds() async {
         let parameters = RequestParameters()
+#if DEBUG
+        let debugSettings = DebugSettings()
+        debugSettings.geography = .other
+        parameters.debugSettings = debugSettings
+#endif
 
         do {
             try await ConsentInformation.shared.requestConsentInfoUpdate(with: parameters)

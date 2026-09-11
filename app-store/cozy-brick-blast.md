@@ -91,7 +91,7 @@ The app itself does not request names, email addresses, accounts, precise locati
 - Public App Store gallery: `app-store/screenshots/cozy-brick-blast/01-game-ready.png`
 - Public App Store gallery: `app-store/screenshots/cozy-brick-blast/02-gameplay.png`
 - In-app purchase review: `app-store/screenshots/cozy-brick-blast/03-remove-ads-review.png`
-- Device size: iPhone 17 Pro portrait, 1206 × 2622 pixels
+- Device size: iPhone 17 Pro Max portrait, 1320 × 2868 pixels (Apple 6.9-inch display set)
 
 ## Review notes
 
@@ -108,3 +108,11 @@ Cozy Brick Blast is a brick-breaking game with no login or account. Tap “Got i
 - Add the in-app purchase to version 1.0
 - Complete review contact details
 - Obtain final approval before adding the version for App Review
+
+## App Privacy draft prepared
+
+- Privacy policy URL entered in App Store Connect
+- Six Google Mobile Ads data types declared: coarse location, device ID, product interaction, advertising data, crash data, and performance data
+- Tracking and identity linkage disclosed conservatively where applicable
+- Crash data declared as not linked to identity and not used for tracking
+- Final **Publish** action intentionally pending release approval
