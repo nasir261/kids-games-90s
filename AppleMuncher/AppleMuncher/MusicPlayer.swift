@@ -20,7 +20,7 @@ final class MusicPlayer: ObservableObject {
         try? AVAudioSession.sharedInstance().setCategory(.ambient, options: [.mixWithOthers])
         try? AVAudioSession.sharedInstance().setActive(true)
 
-        guard let url = Bundle.main.url(forResource: "GameplayMusic", withExtension: "m4a") else { return }
+        guard let url = Bundle.main.url(forResource: "GameplayMusic", withExtension: "wav") else { return }
         player = try? AVAudioPlayer(contentsOf: url)
         player?.numberOfLoops = -1
         player?.volume = volumeLevel
