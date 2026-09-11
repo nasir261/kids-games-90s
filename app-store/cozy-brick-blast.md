@@ -82,9 +82,9 @@ The app itself does not request names, email addresses, accounts, precise locati
 - Placement: Natural breaks after completed rounds; never during active gameplay
 - Frequency target: No more than one ad after every three completed rounds
 - Development: Use Google's iOS interstitial test ad unit only
-- Production AdMob app ID: Pending
-- Production interstitial ad unit ID: Pending
-- UK/EEA consent message: Required in AdMob Privacy & messaging before release
+- Production AdMob app ID: `ca-app-pub-9417522021185169~1923039418`
+- Production interstitial ad unit ID: `ca-app-pub-9417522021185169/9145344304`
+- UK/EEA consent message: Published in AdMob with Consent, Do not consent, and Manage options choices
 
 ## Screenshots prepared
 
@@ -99,8 +99,8 @@ Cozy Brick Blast is a brick-breaking game with no login or account. Tap “Got i
 
 ## Submission checklist
 
-- Add the production AdMob app ID and production interstitial ad unit ID
-- Create and publish the UK/EEA privacy message in AdMob
+- Production AdMob app ID and interstitial ad unit ID added
+- UK/EEA privacy message created and published in AdMob
 - Verify consent choices and the privacy-options entry point
 - Complete App Store Privacy using the final SDK privacy report
 - Upload app screenshots and the in-app purchase review screenshot
@@ -116,3 +116,13 @@ Cozy Brick Blast is a brick-breaking game with no login or account. Tap “Got i
 - Tracking and identity linkage disclosed conservatively where applicable
 - Crash data declared as not linked to identity and not used for tracking
 - Final **Publish** action intentionally pending release approval
+
+## AdMob production configuration
+
+- AdMob app created as an unpublished iOS app under `nasiralimd@gmail.com`
+- App ID: `ca-app-pub-9417522021185169~1923039418`
+- Interstitial ad unit: `ca-app-pub-9417522021185169/9145344304`
+- Placement name: `Between Rounds Interstitial`
+- Release configuration uses the production IDs; Debug continues to use Google's sample IDs
+- European consent message published for Cozy Brick Blast with a direct decline choice in every region
+- Link the App Store listing in AdMob after Cozy Brick Blast is published
