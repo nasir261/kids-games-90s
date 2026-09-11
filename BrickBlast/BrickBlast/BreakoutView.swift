@@ -73,6 +73,7 @@ struct BreakoutView: View {
         .onAppear {
             backgroundVariant = SleepyBackgroundVariant.allCases.randomElement()!
             MusicPlayer.shared.play(.breakout)
+            AdManager.shared.configure()
         }
         .onDisappear {
             gameTimer?.invalidate()
@@ -84,27 +85,34 @@ struct BreakoutView: View {
     // MARK: – Header
 
     private var headerBar: some View {
-        HStack {
-            Text("🧱 Cozy Brick Blast")
-                .font(.system(size: 22, weight: .bold, design: .monospaced))
-                .foregroundColor(.yellow)
-            Spacer()
-            Text("Score: \(score)")
-                .font(.system(size: 17, weight: .bold, design: .monospaced))
-                .foregroundColor(.white)
-                .opacity(sleepySession.shouldHideScore ? 0 : 1)
-            Text(String(repeating: "❤️", count: lives))
-                .font(.system(size: 16))
-            MusicMuteButton()
-            SleepyModeButton()
-            ParentalSettingsButton()
-            if isPlaying && !gameOver && !won {
-                PauseButton(isPaused: $isPaused)
-                    .padding(.leading, 6)
+        VStack(spacing: 8) {
+            HStack(spacing: 10) {
+                Text("🧱 Cozy Brick Blast")
+                    .font(.system(size: 20, weight: .bold, design: .monospaced))
+                    .foregroundColor(.yellow)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.72)
+                Spacer(minLength: 8)
+                Text("Score: \(score)")
+                    .font(.system(size: 16, weight: .bold, design: .monospaced))
+                    .foregroundColor(.white)
+                    .opacity(sleepySession.shouldHideScore ? 0 : 1)
+                Text(String(repeating: "❤️", count: lives))
+                    .font(.system(size: 15))
+            }
+
+            HStack(spacing: 10) {
+                Spacer()
+                MusicMuteButton()
+                SleepyModeButton()
+                ParentalSettingsButton()
+                if isPlaying && !gameOver && !won {
+                    PauseButton(isPaused: $isPaused)
+                }
             }
         }
         .padding(.horizontal)
-        .padding(.vertical, 10)
+        .padding(.vertical, 8)
     }
 
     // MARK: – Canvas
@@ -290,6 +298,7 @@ struct BreakoutView: View {
             isPlaying = false
             Haptics.success()
             center.recordScore(score, thresholds: (100, 200, 280), for: .breakout)
+            AdManager.shared.recordCompletedRound()
             return
         }
 
@@ -302,6 +311,7 @@ struct BreakoutView: View {
                 gameOver = true
                 isPlaying = false
                 center.recordScore(score, thresholds: (100, 200, 280), for: .breakout)
+                AdManager.shared.recordCompletedRound()
             } else {
                 ballPos = CGPoint(x: size.width / 2, y: size.height / 2)
                 ballVel = initialBallVel

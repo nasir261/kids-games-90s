@@ -223,12 +223,15 @@ struct GoodnightCard: View {
 struct ParentalSettingsSheet: View {
     let onDone: () -> Void
 
+    @ObservedObject private var purchases = PurchaseManager.shared
+    @ObservedObject private var ads = AdManager.shared
     @State private var newCode = ""
     @State private var confirmCode = ""
     @State private var message: String?
 
     var body: some View {
-        VStack(spacing: 16) {
+        ScrollView {
+          VStack(spacing: 16) {
             Text("👪 Parent Settings")
                 .font(.system(size: 22, weight: .bold, design: .monospaced))
                 .foregroundColor(.white)
@@ -271,6 +274,50 @@ struct ParentalSettingsSheet: View {
             .font(.system(size: 14, weight: .semibold, design: .monospaced))
             .foregroundColor(.cyan)
 
+            VStack(spacing: 10) {
+                if purchases.hasRemovedAds {
+                    Label("Ad-free version active", systemImage: "checkmark.seal.fill")
+                        .foregroundColor(.green)
+                } else {
+                    Button {
+                        Task { await purchases.purchaseRemoveAds() }
+                    } label: {
+                        Label("Remove Ads — \(purchases.displayPrice)", systemImage: "nosign")
+                            .font(.system(size: 16, weight: .bold, design: .monospaced))
+                            .foregroundColor(.black)
+                            .padding(.horizontal, 18)
+                            .padding(.vertical, 11)
+                            .background(Color.yellow)
+                            .cornerRadius(12)
+                    }
+                    .buttonStyle(.plain)
+                    .disabled(purchases.isWorking)
+                }
+
+                Button("Restore Purchases") {
+                    Task { await purchases.restorePurchases() }
+                }
+                .disabled(purchases.isWorking)
+                .foregroundColor(.cyan)
+
+                if ads.isPrivacyOptionsRequired {
+                    Button("Advertising Privacy Choices") {
+                        Task { await ads.presentPrivacyOptions() }
+                    }
+                    .foregroundColor(.cyan)
+                }
+
+                if purchases.isWorking {
+                    ProgressView().tint(.white)
+                }
+                if let purchaseMessage = purchases.message {
+                    Text(purchaseMessage)
+                        .font(.system(size: 12, design: .monospaced))
+                        .foregroundColor(.white.opacity(0.85))
+                        .multilineTextAlignment(.center)
+                }
+            }
+
             HStack(spacing: 14) {
                 PrimaryGameButton(label: "Cancel", color: .gray, action: onDone)
                 PrimaryGameButton(label: "Save 💾", color: .green) {
@@ -286,11 +333,10 @@ struct ParentalSettingsSheet: View {
                     onDone()
                 }
             }
+          }
+          .padding(24)
         }
-        .padding(24)
         .background(Color.black.opacity(0.92))
-        .cornerRadius(20)
-        .padding(.horizontal, 24)
     }
 }
 
