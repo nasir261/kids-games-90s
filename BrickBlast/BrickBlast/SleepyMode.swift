@@ -264,6 +264,13 @@ struct ParentalSettingsSheet: View {
                     .multilineTextAlignment(.center)
             }
 
+            HStack(spacing: 20) {
+                Link("Privacy Policy", destination: URL(string: "https://nasir261.github.io/kids-games-90s/privacy.html")!)
+                Link("Support", destination: URL(string: "https://nasir261.github.io/kids-games-90s/support.html")!)
+            }
+            .font(.system(size: 14, weight: .semibold, design: .monospaced))
+            .foregroundColor(.cyan)
+
             HStack(spacing: 14) {
                 PrimaryGameButton(label: "Cancel", color: .gray, action: onDone)
                 PrimaryGameButton(label: "Save 💾", color: .green) {
