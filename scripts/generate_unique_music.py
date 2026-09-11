@@ -18,18 +18,18 @@ ROOT = Path(__file__).resolve().parents[1]
 
 TRACKS = {
     "AppleMuncher/AppleMuncher/GameplayMusic.wav": {
-        "bpm": 112,
+        "bpm": 82,
         "roots": [60, 65, 57, 67],
         "melody": [0, 4, 7, 9, 7, 4, 2, 4, 0, 4, 7, 12, 9, 7, 4, 2],
-        "lead": "square",
-        "mood": "bounce",
+        "lead": "triangle",
+        "mood": "gentle",
     },
     "BeeBop/BeeBop/GameplayMusic.wav": {
-        "bpm": 104,
+        "bpm": 76,
         "roots": [67, 62, 64, 60],
         "melody": [7, 12, 16, 19, 16, 12, 9, 14, 7, 11, 14, 19, 17, 14, 11, 9],
         "lead": "sine",
-        "mood": "flutter",
+        "mood": "gentle",
     },
     "BrickBlast/BrickBlast/GameplayMusic.wav": {
         "bpm": 80,
@@ -39,25 +39,25 @@ TRACKS = {
         "mood": "gentle",
     },
     "MemoryMatch/MemoryMatch/GameplayMusic.wav": {
-        "bpm": 88,
+        "bpm": 72,
         "roots": [60, 57, 65, 67],
         "melody": [0, 4, 7, 12, 9, 7, 4, 2, 0, 2, 4, 9, 7, 4, 2, 0],
         "lead": "bell",
         "mood": "gentle",
     },
     "MoleBash/MoleBash/GameplayMusic.wav": {
-        "bpm": 120,
+        "bpm": 86,
         "roots": [53, 58, 55, 60],
         "melody": [0, 4, 7, 4, 12, 7, 4, 2, 0, 5, 9, 5, 12, 9, 7, 4],
-        "lead": "pluck",
-        "mood": "playful",
+        "lead": "triangle",
+        "mood": "gentle",
     },
     "PaddleBounce/PaddleBounce/GameplayMusic.wav": {
-        "bpm": 96,
+        "bpm": 78,
         "roots": [57, 60, 55, 52],
         "melody": [0, 7, 12, 7, 3, 10, 12, 10, 0, 7, 14, 12, 10, 7, 3, 7],
-        "lead": "triangle",
-        "mood": "pingpong",
+        "lead": "sine",
+        "mood": "gentle",
     },
 }
 
