@@ -90,7 +90,7 @@ struct BeeBopView: View {
 
     private var headerBar: some View {
         HStack {
-            Text("🐝 Sleepy Bee Bop")
+            Text("🐝 Cozy Bee Bop")
                 .font(.system(size: 22, weight: .bold, design: .monospaced))
                 .foregroundColor(.yellow)
             Spacer()
@@ -178,7 +178,7 @@ struct BeeBopView: View {
             }
             if showTutorial {
                 TutorialOverlay(
-                    emoji: "🐝", title: "Sleepy Bee Bop",
+                    emoji: "🐝", title: "Cozy Bee Bop",
                     instructions: "Tap anywhere to flap and fly.\nWeave through the flower stems.\nDon't hit them or the ground!"
                 ) {
                     showTutorial = false

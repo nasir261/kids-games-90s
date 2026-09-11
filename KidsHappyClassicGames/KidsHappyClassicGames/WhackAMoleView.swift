@@ -61,7 +61,7 @@ struct WhackAMoleView: View {
 
             VStack(spacing: 18) {
                 HStack {
-                    Text("🔨 Sleepy Mole Bash")
+                    Text("🔨 Cozy Mole Bash")
                         .font(.system(size: 22, weight: .bold, design: .monospaced))
                         .foregroundColor(.white)
                     if isPlaying && !gameOver {
@@ -128,7 +128,7 @@ struct WhackAMoleView: View {
 
             if showTutorial {
                 TutorialOverlay(
-                    emoji: "🔨", title: "Sleepy Mole Bash",
+                    emoji: "🔨", title: "Cozy Mole Bash",
                     instructions: "Tap the moles 🦔 as soon as they pop up.\nBe quick — you only have 30 seconds!"
                 ) {
                     showTutorial = false

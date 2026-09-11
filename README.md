@@ -6,11 +6,12 @@ Classic 1990s mobile games for children aged 5–6, built as an iOS SwiftUI app.
 
 | Game | Description |
 |------|-------------|
-| 🐍 **Sleepy Apple Muncher** | Grid-based snake with D-pad controls, growing tail and apple food |
-| 🃏 **Sleepy Memory Match** | 4×4 emoji card grid with flip animation and match detection |
-| 🔨 **Sleepy Mole Bash** | 3×3 mole grid, 30-second timed rounds, score tracking |
-| 🏓 **Sleepy Paddle Bounce** | Player vs CPU with drag-to-move paddle and ball physics |
-| 🧱 **Sleepy Brick Blast** | 4-row coloured bricks, draggable paddle, 3 lives system |
+| 🐍 **Cozy Apple Muncher** | Grid-based snake with D-pad controls, growing tail and apple food |
+| 🃏 **Cozy Memory Match** | 4×4 emoji card grid with flip animation and match detection |
+| 🔨 **Cozy Mole Bash** | 3×3 mole grid, 30-second timed rounds, score tracking |
+| 🏓 **Cozy Paddle Bounce** | Player vs CPU with drag-to-move paddle and ball physics |
+| 🧱 **Cozy Brick Blast** | 4-row coloured bricks, draggable paddle, 3 lives system |
+| 🐝 **Cozy Bee Bop** | Tap-to-fly bee game with flower-stem obstacles |
 
 ## Requirements
 

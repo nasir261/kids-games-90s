@@ -163,7 +163,7 @@
 				DEVELOPMENT_TEAM = 9KJNFQYHMS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Sleepy Brick Blast";
+				INFOPLIST_KEY_CFBundleDisplayName = "Cozy Brick Blast";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -191,7 +191,7 @@
 				DEVELOPMENT_TEAM = 9KJNFQYHMS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Sleepy Brick Blast";
+				INFOPLIST_KEY_CFBundleDisplayName = "Cozy Brick Blast";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

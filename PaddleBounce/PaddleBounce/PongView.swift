@@ -77,7 +77,7 @@ struct PongView: View {
 
     private var headerBar: some View {
         HStack {
-            Text("🏓 Sleepy Paddle Bounce")
+            Text("🏓 Cozy Paddle Bounce")
                 .font(.system(size: 22, weight: .bold, design: .monospaced))
                 .foregroundColor(.yellow)
             Spacer()
@@ -153,7 +153,7 @@ struct PongView: View {
             }
             if showTutorial {
                 TutorialOverlay(
-                    emoji: "🏓", title: "Sleepy Paddle Bounce",
+                    emoji: "🏓", title: "Cozy Paddle Bounce",
                     instructions: "Drag to move your paddle.\nBounce the ball back.\nDon't let it get past you!"
                 ) {
                     showTutorial = false

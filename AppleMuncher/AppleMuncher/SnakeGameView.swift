@@ -38,7 +38,7 @@ struct SnakeGameView: View {
             }
             VStack(spacing: 14) {
                 HStack {
-                    Text("🐍 Sleepy Apple Muncher")
+                    Text("🐍 Cozy Apple Muncher")
                         .font(.system(size: 22, weight: .bold, design: .monospaced))
                         .foregroundColor(.yellow)
                     Spacer()
@@ -124,7 +124,7 @@ struct SnakeGameView: View {
 
             if showTutorial {
                 TutorialOverlay(
-                    emoji: "🐍", title: "Sleepy Apple Muncher",
+                    emoji: "🐍", title: "Cozy Apple Muncher",
                     instructions: "Use the arrows to steer.\nEat the apple 🍎 to grow.\nDon't hit the walls or yourself!"
                 ) {
                     showTutorial = false

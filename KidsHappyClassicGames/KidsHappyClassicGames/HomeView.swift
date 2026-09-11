@@ -13,12 +13,12 @@ struct HomeView: View {
                             .foregroundColor(.yellow)
                             .padding(.top, 14)
 
-                        GameMenuButton(game: .breakout, title: "🧱  Sleepy Brick Blast",     color: .red,    destination: AnyView(BreakoutView()))
-                        GameMenuButton(game: .snake, title: "🐍  Sleepy Apple Muncher", color: .green,  destination: AnyView(SnakeGameView()))
-                        GameMenuButton(game: .pong, title: "🏓  Sleepy Paddle Bounce", color: .purple, destination: AnyView(PongView()))
-                        GameMenuButton(game: .whackAMole, title: "🔨  Sleepy Mole Bash", color: .orange, destination: AnyView(WhackAMoleView()))
-                        GameMenuButton(game: .memoryMatch, title: "🃏  Sleepy Memory Match", color: .blue,   destination: AnyView(MemoryMatchView()))
-                        GameMenuButton(game: .beeBop, title: "🐝  Sleepy Bee Bop", color: .indigo, destination: AnyView(BeeBopView()))
+                        GameMenuButton(game: .breakout, title: "🧱  Cozy Brick Blast",     color: .red,    destination: AnyView(BreakoutView()))
+                        GameMenuButton(game: .snake, title: "🐍  Cozy Apple Muncher", color: .green,  destination: AnyView(SnakeGameView()))
+                        GameMenuButton(game: .pong, title: "🏓  Cozy Paddle Bounce", color: .purple, destination: AnyView(PongView()))
+                        GameMenuButton(game: .whackAMole, title: "🔨  Cozy Mole Bash", color: .orange, destination: AnyView(WhackAMoleView()))
+                        GameMenuButton(game: .memoryMatch, title: "🃏  Cozy Memory Match", color: .blue,   destination: AnyView(MemoryMatchView()))
+                        GameMenuButton(game: .beeBop, title: "🐝  Cozy Bee Bop", color: .indigo, destination: AnyView(BeeBopView()))
                     }
                     .padding(.horizontal, 20)
                     .padding(.bottom, 20)

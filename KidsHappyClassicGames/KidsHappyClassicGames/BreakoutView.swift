@@ -170,7 +170,7 @@ struct BreakoutView: View {
             }
             if showTutorial {
                 TutorialOverlay(
-                    emoji: "🧱", title: "Sleepy Brick Blast",
+                    emoji: "🧱", title: "Cozy Brick Blast",
                     instructions: "Drag your paddle to bounce the ball.\nBreak all the bricks.\nDon't miss or you'll lose a life!"
                 ) {
                     showTutorial = false

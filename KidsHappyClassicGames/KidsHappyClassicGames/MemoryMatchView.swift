@@ -41,7 +41,7 @@ struct MemoryMatchView: View {
             case .photo: SleepyPhotoBackgroundView().ignoresSafeArea()
             }
             VStack(spacing: 16) {
-                Text("🃏 Sleepy Memory Match")
+                Text("🃏 Cozy Memory Match")
                     .font(.system(size: 22, weight: .bold, design: .monospaced))
                     .foregroundColor(.yellow)
 
@@ -93,7 +93,7 @@ struct MemoryMatchView: View {
 
             if showTutorial {
                 TutorialOverlay(
-                    emoji: "🃏", title: "Sleepy Memory Match",
+                    emoji: "🃏", title: "Cozy Memory Match",
                     instructions: "Flip two cards at a time.\nFind matching pairs.\nMatch all 8 to win!"
                 ) {
                     showTutorial = false
