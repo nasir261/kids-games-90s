@@ -32,11 +32,11 @@ TRACKS = {
         "mood": "flutter",
     },
     "BrickBlast/BrickBlast/GameplayMusic.wav": {
-        "bpm": 128,
-        "roots": [52, 55, 57, 50],
-        "melody": [0, 7, 12, 7, 3, 10, 15, 10, 0, 7, 12, 14, 12, 10, 7, 3],
-        "lead": "saw",
-        "mood": "drive",
+        "bpm": 80,
+        "roots": [55, 60, 57, 62],
+        "melody": [0, 4, 7, 9, 7, 4, 2, 0, 0, 2, 4, 7, 9, 7, 4, 2],
+        "lead": "bell",
+        "mood": "gentle",
     },
     "MemoryMatch/MemoryMatch/GameplayMusic.wav": {
         "bpm": 88,
