@@ -85,7 +85,7 @@ struct BreakoutView: View {
 
     private var headerBar: some View {
         HStack {
-            Text("🧱 Breakout")
+            Text("🧱 Cozy Brick Blast")
                 .font(.system(size: 22, weight: .bold, design: .monospaced))
                 .foregroundColor(.yellow)
             Spacer()
