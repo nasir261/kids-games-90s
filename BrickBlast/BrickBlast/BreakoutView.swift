@@ -86,22 +86,21 @@ struct BreakoutView: View {
 
     private var headerBar: some View {
         VStack(spacing: 8) {
-            HStack(spacing: 10) {
+            HStack {
                 Text("🧱 Cozy Brick Blast")
                     .font(.system(size: 20, weight: .bold, design: .monospaced))
                     .foregroundColor(.yellow)
                     .lineLimit(1)
-                    .minimumScaleFactor(0.72)
-                Spacer(minLength: 8)
+                Spacer()
+            }
+
+            HStack(spacing: 8) {
                 Text("Score: \(score)")
                     .font(.system(size: 16, weight: .bold, design: .monospaced))
                     .foregroundColor(.white)
                     .opacity(sleepySession.shouldHideScore ? 0 : 1)
                 Text(String(repeating: "❤️", count: lives))
                     .font(.system(size: 15))
-            }
-
-            HStack(spacing: 10) {
                 Spacer()
                 MusicMuteButton()
                 SleepyModeButton()
