@@ -93,6 +93,16 @@ The app itself does not request names, email addresses, accounts, precise locati
 - In-app purchase review: `app-store/screenshots/cozy-brick-blast/03-remove-ads-review.png`
 - Device size: iPhone 17 Pro Max portrait, 1320 × 2868 pixels (Apple 6.9-inch display set)
 
+## App preview prepared
+
+- Gameplay preview: `app-store/previews/cozy-brick-blast/01-gameplay-preview-886x1920.mp4`
+- Duration: 29.5 seconds
+- Format: H.264 video with stereo AAC audio
+- Display size: 886 × 1920 pixels (Apple 6.9/6.5/6.3/6.1-inch portrait preview set)
+- Frame rate: 30 fps
+- The source iPhone recording remains unchanged in Downloads
+- Recording note: the captured phone build shortens the header to “Cozy Brick Bla…”. Correct the title layout in the next phone build before final submission if a new preview is recorded.
+
 ## Review notes
 
 Cozy Brick Blast is a brick-breaking game with no login or account. Tap “Got it,” choose a difficulty, then tap “Tap to Play” to begin. Interstitial ads can appear only at natural breaks after completed rounds and never during active play. The Parent Settings screen offers a £2.99 non-consumable “Remove Ads” purchase and “Restore Purchases.” The settings passcode and game progress are stored locally and do not create an account. All music, artwork, and code are original.
@@ -104,6 +114,7 @@ Cozy Brick Blast is a brick-breaking game with no login or account. Tap “Got i
 - Verify consent choices and the privacy-options entry point
 - Complete App Store Privacy using the final SDK privacy report
 - Upload app screenshots and the in-app purchase review screenshot
+- Upload the prepared gameplay preview
 - Upload and select the signed build
 - Add the in-app purchase to version 1.0
 - Complete review contact details
