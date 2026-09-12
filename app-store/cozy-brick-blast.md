@@ -96,12 +96,12 @@ The app itself does not request names, email addresses, accounts, precise locati
 ## App preview prepared
 
 - Gameplay preview: `app-store/previews/cozy-brick-blast/01-gameplay-preview-886x1920.mp4`
-- Duration: 29.5 seconds
+- Duration: 18 seconds
 - Format: H.264 video with stereo AAC audio
 - Display size: 886 × 1920 pixels (Apple 6.9/6.5/6.3/6.1-inch portrait preview set)
 - Frame rate: 30 fps
 - The source iPhone recording remains unchanged in Downloads
-- Recording note: the captured phone build shortens the header to “Cozy Brick Bla…”. Correct the title layout in the next phone build before final submission if a new preview is recorded.
+- Recording verified on the corrected phone build with the complete “Cozy Brick Blast” header visible throughout.
 
 ## Review notes
 
