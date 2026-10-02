@@ -119,14 +119,21 @@ struct SleepyOverlay: View {
 
 /// Simple 4-digit passcode gate so only a grown-up can dismiss the
 /// "Goodnight" screen and let a wound-down session keep playing. The
-/// passcode is stored on-device and changeable from the parent settings screen.
+/// passcode is created on first use, stored on-device, and changeable from
+/// the parent settings screen.
 enum ParentalGate {
     private static let key = "parentalPasscode"
-    private static let defaultPasscode = "1234"
 
-    static var passcode: String {
-        get { UserDefaults.standard.string(forKey: key) ?? defaultPasscode }
-        set { UserDefaults.standard.set(newValue, forKey: key) }
+    static var isConfigured: Bool {
+        UserDefaults.standard.string(forKey: key) != nil
+    }
+
+    static func matches(_ entry: String) -> Bool {
+        UserDefaults.standard.string(forKey: key) == entry
+    }
+
+    static func save(_ newPasscode: String) {
+        UserDefaults.standard.set(newPasscode, forKey: key)
     }
 }
 
@@ -166,7 +173,7 @@ struct ParentalGateSheet: View {
             HStack(spacing: 14) {
                 PrimaryGameButton(label: "Cancel", color: .gray, action: onCancel)
                 PrimaryGameButton(label: "Unlock 🔓", color: .green) {
-                    if entry == ParentalGate.passcode {
+                    if ParentalGate.matches(entry) {
                         entry = ""
                         showError = false
                         onSuccess()
@@ -183,11 +190,81 @@ struct ParentalGateSheet: View {
     }
 }
 
+/// First-use setup shown before any validation prompt when no passcode exists.
+struct ParentalPasscodeSetupSheet: View {
+    let onCreated: () -> Void
+    let onCancel: () -> Void
+
+    @State private var newCode = ""
+    @State private var confirmCode = ""
+    @State private var message: String?
+
+    var body: some View {
+        VStack(spacing: 16) {
+            Text("👪 Create Parent Passcode")
+                .font(.system(size: 22, weight: .bold, design: .monospaced))
+                .foregroundColor(.white)
+            Text("Create a 4-digit passcode before opening Parent Settings.")
+                .font(.system(size: 14, design: .monospaced))
+                .foregroundColor(.white.opacity(0.85))
+                .multilineTextAlignment(.center)
+
+            SecureField("New passcode", text: $newCode)
+                .keyboardType(.numberPad)
+                .multilineTextAlignment(.center)
+                .font(.system(size: 22, weight: .bold, design: .monospaced))
+                .padding(10)
+                .background(Color.white.opacity(0.15))
+                .cornerRadius(10)
+                .foregroundColor(.white)
+                .frame(width: 180)
+
+            SecureField("Confirm passcode", text: $confirmCode)
+                .keyboardType(.numberPad)
+                .multilineTextAlignment(.center)
+                .font(.system(size: 22, weight: .bold, design: .monospaced))
+                .padding(10)
+                .background(Color.white.opacity(0.15))
+                .cornerRadius(10)
+                .foregroundColor(.white)
+                .frame(width: 180)
+
+            if let message {
+                Text(message)
+                    .font(.system(size: 12, design: .monospaced))
+                    .foregroundColor(.red)
+                    .multilineTextAlignment(.center)
+            }
+
+            HStack(spacing: 14) {
+                PrimaryGameButton(label: "Cancel", color: .gray, action: onCancel)
+                PrimaryGameButton(label: "Create ✓", color: .green) {
+                    guard newCode.count == 4, newCode.allSatisfy(\.isNumber) else {
+                        message = "Passcode must be 4 digits."
+                        return
+                    }
+                    guard newCode == confirmCode else {
+                        message = "Passcodes don't match."
+                        return
+                    }
+                    ParentalGate.save(newCode)
+                    onCreated()
+                }
+            }
+        }
+        .padding(24)
+        .background(Color.black.opacity(0.92))
+        .cornerRadius(20)
+        .padding(.horizontal, 24)
+    }
+}
+
 /// Shown once a wound-down session reaches its natural end. "Wake Up"
 /// requires the parental passcode before gameplay can resume.
 struct GoodnightCard: View {
     let action: () -> Void
     @State private var showGate = false
+    @State private var showSetup = false
 
     var body: some View {
         ZStack {
@@ -199,7 +276,11 @@ struct GoodnightCard: View {
                     .font(.system(size: 16, design: .monospaced))
                     .foregroundColor(.white.opacity(0.85))
                 PrimaryGameButton(label: "Wake Up ☀️", color: .yellow) {
-                    showGate = true
+                    if ParentalGate.isConfigured {
+                        showGate = true
+                    } else {
+                        showSetup = true
+                    }
                 }
             }
             .padding(24)
@@ -213,6 +294,16 @@ struct GoodnightCard: View {
                         action()
                     },
                     onCancel: { showGate = false }
+                )
+            }
+
+            if showSetup {
+                ParentalPasscodeSetupSheet(
+                    onCreated: {
+                        showSetup = false
+                        action()
+                    },
+                    onCancel: { showSetup = false }
                 )
             }
         }
@@ -235,7 +326,7 @@ struct ParentalSettingsSheet: View {
             Text("👪 Parent Settings")
                 .font(.system(size: 22, weight: .bold, design: .monospaced))
                 .foregroundColor(.white)
-            Text("Set a new 4-digit passcode used to wake up from Sleepy Mode.")
+            Text("Change the 4-digit passcode used for Parent Settings and Sleepy Mode.")
                 .font(.system(size: 14, design: .monospaced))
                 .foregroundColor(.white.opacity(0.85))
                 .multilineTextAlignment(.center)
@@ -329,7 +420,7 @@ struct ParentalSettingsSheet: View {
                         message = "Passcodes don't match."
                         return
                     }
-                    ParentalGate.passcode = newCode
+                    ParentalGate.save(newCode)
                     onDone()
                 }
             }
@@ -340,15 +431,20 @@ struct ParentalSettingsSheet: View {
     }
 }
 
-/// Gear button shown in each game's header. Requires the current passcode
-/// before letting a parent set a new one.
+/// Gear button shown in each game's header. First use creates a passcode;
+/// later visits require that passcode before Parent Settings opens.
 struct ParentalSettingsButton: View {
     @State private var showGate = false
+    @State private var showSetup = false
     @State private var showSettings = false
 
     var body: some View {
         Button {
-            showGate = true
+            if ParentalGate.isConfigured {
+                showGate = true
+            } else {
+                showSetup = true
+            }
         } label: {
             Image(systemName: "gearshape.fill")
                 .font(.system(size: 16, weight: .bold))
@@ -359,13 +455,25 @@ struct ParentalSettingsButton: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel("Parent Settings")
+        .sheet(isPresented: $showSetup) {
+            ZStack {
+                Color.black.ignoresSafeArea()
+                ParentalPasscodeSetupSheet(
+                    onCreated: {
+                        showSetup = false
+                        DispatchQueue.main.async { showSettings = true }
+                    },
+                    onCancel: { showSetup = false }
+                )
+            }
+        }
         .sheet(isPresented: $showGate) {
             ZStack {
                 Color.black.ignoresSafeArea()
                 ParentalGateSheet(
                     onSuccess: {
                         showGate = false
-                        showSettings = true
+                        DispatchQueue.main.async { showSettings = true }
                     },
                     onCancel: { showGate = false }
                 )
