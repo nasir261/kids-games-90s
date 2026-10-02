@@ -31,10 +31,11 @@ jobs:
         run: |
           xcodebuild \
             -project BrickBlast/BrickBlast.xcodeproj \
-            -target BrickBlast \
+            -scheme BrickBlast \
             -configuration Debug \
             -sdk iphonesimulator \
             -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build/BrickBlast \
             CODE_SIGNING_ALLOWED=NO \
             build
 
