@@ -105,7 +105,28 @@ The app itself does not request names, email addresses, accounts, precise locati
 
 ## Review notes
 
-Cozy Brick Blast is a brick-breaking game with no login or account. Tap “Got it,” choose a difficulty, then tap “Tap to Play” to begin. Interstitial ads can appear only at natural breaks after completed rounds and never during active play. The Parent Settings screen offers a £2.99 non-consumable “Remove Ads” purchase and “Restore Purchases.” The settings passcode and game progress are stored locally and do not create an account. All music, artwork, and code are original.
+Cozy Brick Blast is a brick-breaking game with no login or account. Tap “Got it,” choose a difficulty, then tap “Tap to Play” to begin.
+
+Parent passcode setup in build 3:
+1. Tap the gear icon in the game header.
+2. On a new installation, “Create Parent Passcode” appears before any validation prompt.
+3. Enter and confirm a four-digit passcode, then tap “Create.”
+4. Parent Settings opens immediately. “Remove Ads” and “Restore Purchases” are available there.
+5. On later visits, the gear icon asks for the saved passcode before opening Parent Settings.
+
+The passcode is stored only on the device and is not an account credential. Interstitial ads can appear only at natural breaks after completed rounds and never during active play. “Remove Ads” is a £2.99 non-consumable purchase. All music, artwork, and code are original.
+
+### Build 3 passcode verification
+
+- [ ] Fresh install shows “Create Parent Passcode” rather than an unlock prompt
+- [ ] Non-four-digit and mismatched entries show an error and do not continue
+- [ ] Matching four-digit entries save successfully and open Parent Settings
+- [ ] Relaunching the app preserves the passcode
+- [ ] Incorrect saved passcode is rejected
+- [ ] Correct saved passcode opens Parent Settings
+- [ ] Changing the passcode requires the current passcode and persists after relaunch
+- [ ] Flow verified on an iPhone simulator/device
+- [ ] Flow verified on an iPad simulator/device
 
 ## Submission checklist
 
