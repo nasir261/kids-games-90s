@@ -1,9 +1,9 @@
 diff --git a/.github/workflows/build-cozy-brick-blast.yml b/.github/workflows/build-cozy-brick-blast.yml
 new file mode 100644
-index 0000000..d268613
+index 0000000..614ac68
 --- /dev/null
 +++ b/.github/workflows/build-cozy-brick-blast.yml
-@@ -0,0 +1,41 @@
+@@ -0,0 +1,42 @@
 +name: Build Cozy Brick Blast
 +
 +on:
@@ -39,10 +39,11 @@ index 0000000..d268613
 +        run: |
 +          xcodebuild \
 +            -project BrickBlast/BrickBlast.xcodeproj \
-+            -target BrickBlast \
++            -scheme BrickBlast \
 +            -configuration Debug \
 +            -sdk iphonesimulator \
 +            -destination 'generic/platform=iOS Simulator' \
++            -derivedDataPath build/BrickBlast \
 +            CODE_SIGNING_ALLOWED=NO \
 +            build
 diff --git a/BrickBlast/BrickBlast.xcodeproj/project.pbxproj b/BrickBlast/BrickBlast.xcodeproj/project.pbxproj
