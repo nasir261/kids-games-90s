@@ -1,0 +1,325 @@
+diff --git a/.github/workflows/build-cozy-brick-blast.yml b/.github/workflows/build-cozy-brick-blast.yml
+new file mode 100644
+index 0000000..0f8b274
+--- /dev/null
++++ b/.github/workflows/build-cozy-brick-blast.yml
+@@ -0,0 +1,42 @@
++name: Build Cozy Brick Blast
++
++on:
++  workflow_dispatch:
++  pull_request:
++    paths:
++      - 'BrickBlast/**'
++      - '.github/workflows/build-cozy-brick-blast.yml'
++  push:
++    branches:
++      - main
++      - rename-sleepy-to-cozy
++      - 'codex/**'
++    paths:
++      - 'BrickBlast/**'
++      - '.github/workflows/build-cozy-brick-blast.yml'
++
++permissions:
++  contents: read
++
++jobs:
++  build:
++    runs-on: macos-latest
++
++    steps:
++      - name: Checkout repository
++        uses: actions/checkout@v4
++
++      - name: Select latest Xcode
++        run: sudo xcode-select -s /Applications/Xcode.app
++
++      - name: Build standalone app for iOS Simulator
++        run: |
++          xcodebuild \
++            -project BrickBlast/BrickBlast.xcodeproj \
++            -target BrickBlast \
++            -configuration Debug \
++            -sdk iphonesimulator \
++            -destination 'generic/platform=iOS Simulator' \
++            -derivedDataPath build/BrickBlast \
++            CODE_SIGNING_ALLOWED=NO \
++            build
+diff --git a/BrickBlast/BrickBlast.xcodeproj/project.pbxproj b/BrickBlast/BrickBlast.xcodeproj/project.pbxproj
+index c05fabf..1884eac 100644
+--- a/BrickBlast/BrickBlast.xcodeproj/project.pbxproj
++++ b/BrickBlast/BrickBlast.xcodeproj/project.pbxproj
+@@ -177,7 +177,7 @@
+ 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+ 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+ 				CODE_SIGN_STYLE = Automatic;
+-				CURRENT_PROJECT_VERSION = 1;
++				CURRENT_PROJECT_VERSION = 3;
+ 				DEVELOPMENT_TEAM = 9KJNFQYHMS;
+ 				ENABLE_PREVIEWS = YES;
+ 				GENERATE_INFOPLIST_FILE = NO;
+@@ -209,7 +209,7 @@
+ 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+ 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+ 				CODE_SIGN_STYLE = Automatic;
+-				CURRENT_PROJECT_VERSION = 1;
++				CURRENT_PROJECT_VERSION = 3;
+ 				DEVELOPMENT_TEAM = 9KJNFQYHMS;
+ 				ENABLE_PREVIEWS = YES;
+ 				GENERATE_INFOPLIST_FILE = NO;
+diff --git a/BrickBlast/BrickBlast/SleepyMode.swift b/BrickBlast/BrickBlast/SleepyMode.swift
+index 83f34be..a61d417 100644
+--- a/BrickBlast/BrickBlast/SleepyMode.swift
++++ b/BrickBlast/BrickBlast/SleepyMode.swift
+@@ -119,14 +119,21 @@ struct SleepyOverlay: View {
+ 
+ /// Simple 4-digit passcode gate so only a grown-up can dismiss the
+ /// "Goodnight" screen and let a wound-down session keep playing. The
+-/// passcode is stored on-device and changeable from the parent settings screen.
++/// passcode is created on first use, stored on-device, and changeable from
++/// the parent settings screen.
+ enum ParentalGate {
+     private static let key = "parentalPasscode"
+-    private static let defaultPasscode = "1234"
+ 
+-    static var passcode: String {
+-        get { UserDefaults.standard.string(forKey: key) ?? defaultPasscode }
+-        set { UserDefaults.standard.set(newValue, forKey: key) }
++    static var isConfigured: Bool {
++        UserDefaults.standard.string(forKey: key) != nil
++    }
++
++    static func matches(_ entry: String) -> Bool {
++        UserDefaults.standard.string(forKey: key) == entry
++    }
++
++    static func save(_ newPasscode: String) {
++        UserDefaults.standard.set(newPasscode, forKey: key)
+     }
+ }
+ 
+@@ -166,7 +173,7 @@ struct ParentalGateSheet: View {
+             HStack(spacing: 14) {
+                 PrimaryGameButton(label: "Cancel", color: .gray, action: onCancel)
+                 PrimaryGameButton(label: "Unlock 🔓", color: .green) {
+-                    if entry == ParentalGate.passcode {
++                    if ParentalGate.matches(entry) {
+                         entry = ""
+                         showError = false
+                         onSuccess()
+@@ -183,11 +190,81 @@ struct ParentalGateSheet: View {
+     }
+ }
+ 
++/// First-use setup shown before any validation prompt when no passcode exists.
++struct ParentalPasscodeSetupSheet: View {
++    let onCreated: () -> Void
++    let onCancel: () -> Void
++
++    @State private var newCode = ""
++    @State private var confirmCode = ""
++    @State private var message: String?
++
++    var body: some View {
++        VStack(spacing: 16) {
++            Text("👪 Create Parent Passcode")
++                .font(.system(size: 22, weight: .bold, design: .monospaced))
++                .foregroundColor(.white)
++            Text("Create a 4-digit passcode before opening Parent Settings.")
++                .font(.system(size: 14, design: .monospaced))
++                .foregroundColor(.white.opacity(0.85))
++                .multilineTextAlignment(.center)
++
++            SecureField("New passcode", text: $newCode)
++                .keyboardType(.numberPad)
++                .multilineTextAlignment(.center)
++                .font(.system(size: 22, weight: .bold, design: .monospaced))
++                .padding(10)
++                .background(Color.white.opacity(0.15))
++                .cornerRadius(10)
++                .foregroundColor(.white)
++                .frame(width: 180)
++
++            SecureField("Confirm passcode", text: $confirmCode)
++                .keyboardType(.numberPad)
++                .multilineTextAlignment(.center)
++                .font(.system(size: 22, weight: .bold, design: .monospaced))
++                .padding(10)
++                .background(Color.white.opacity(0.15))
++                .cornerRadius(10)
++                .foregroundColor(.white)
++                .frame(width: 180)
++
++            if let message {
++                Text(message)
++                    .font(.system(size: 12, design: .monospaced))
++                    .foregroundColor(.red)
++                    .multilineTextAlignment(.center)
++            }
++
++            HStack(spacing: 14) {
++                PrimaryGameButton(label: "Cancel", color: .gray, action: onCancel)
++                PrimaryGameButton(label: "Create ✓", color: .green) {
++                    guard newCode.count == 4, newCode.allSatisfy(\.isNumber) else {
++                        message = "Passcode must be 4 digits."
++                        return
++                    }
++                    guard newCode == confirmCode else {
++                        message = "Passcodes don't match."
++                        return
++                    }
++                    ParentalGate.save(newCode)
++                    onCreated()
++                }
++            }
++        }
++        .padding(24)
++        .background(Color.black.opacity(0.92))
++        .cornerRadius(20)
++        .padding(.horizontal, 24)
++    }
++}
++
+ /// Shown once a wound-down session reaches its natural end. "Wake Up"
+ /// requires the parental passcode before gameplay can resume.
+ struct GoodnightCard: View {
+     let action: () -> Void
+     @State private var showGate = false
++    @State private var showSetup = false
+ 
+     var body: some View {
+         ZStack {
+@@ -199,7 +276,11 @@ struct GoodnightCard: View {
+                     .font(.system(size: 16, design: .monospaced))
+                     .foregroundColor(.white.opacity(0.85))
+                 PrimaryGameButton(label: "Wake Up ☀️", color: .yellow) {
+-                    showGate = true
++                    if ParentalGate.isConfigured {
++                        showGate = true
++                    } else {
++                        showSetup = true
++                    }
+                 }
+             }
+             .padding(24)
+@@ -215,6 +296,16 @@ struct GoodnightCard: View {
+                     onCancel: { showGate = false }
+                 )
+             }
++
++            if showSetup {
++                ParentalPasscodeSetupSheet(
++                    onCreated: {
++                        showSetup = false
++                        action()
++                    },
++                    onCancel: { showSetup = false }
++                )
++            }
+         }
+     }
+ }
+@@ -235,7 +326,7 @@ struct ParentalSettingsSheet: View {
+             Text("👪 Parent Settings")
+                 .font(.system(size: 22, weight: .bold, design: .monospaced))
+                 .foregroundColor(.white)
+-            Text("Set a new 4-digit passcode used to wake up from Sleepy Mode.")
++            Text("Change the 4-digit passcode used for Parent Settings and Sleepy Mode.")
+                 .font(.system(size: 14, design: .monospaced))
+                 .foregroundColor(.white.opacity(0.85))
+                 .multilineTextAlignment(.center)
+@@ -329,7 +420,7 @@ struct ParentalSettingsSheet: View {
+                         message = "Passcodes don't match."
+                         return
+                     }
+-                    ParentalGate.passcode = newCode
++                    ParentalGate.save(newCode)
+                     onDone()
+                 }
+             }
+@@ -340,15 +431,20 @@ struct ParentalSettingsSheet: View {
+     }
+ }
+ 
+-/// Gear button shown in each game's header. Requires the current passcode
+-/// before letting a parent set a new one.
++/// Gear button shown in each game's header. First use creates a passcode;
++/// later visits require that passcode before Parent Settings opens.
+ struct ParentalSettingsButton: View {
+     @State private var showGate = false
++    @State private var showSetup = false
+     @State private var showSettings = false
+ 
+     var body: some View {
+         Button {
+-            showGate = true
++            if ParentalGate.isConfigured {
++                showGate = true
++            } else {
++                showSetup = true
++            }
+         } label: {
+             Image(systemName: "gearshape.fill")
+                 .font(.system(size: 16, weight: .bold))
+@@ -359,13 +455,25 @@ struct ParentalSettingsButton: View {
+         }
+         .buttonStyle(.plain)
+         .accessibilityLabel("Parent Settings")
++        .sheet(isPresented: $showSetup) {
++            ZStack {
++                Color.black.ignoresSafeArea()
++                ParentalPasscodeSetupSheet(
++                    onCreated: {
++                        showSetup = false
++                        DispatchQueue.main.async { showSettings = true }
++                    },
++                    onCancel: { showSetup = false }
++                )
++            }
++        }
+         .sheet(isPresented: $showGate) {
+             ZStack {
+                 Color.black.ignoresSafeArea()
+                 ParentalGateSheet(
+                     onSuccess: {
+                         showGate = false
+-                        showSettings = true
++                        DispatchQueue.main.async { showSettings = true }
+                     },
+                     onCancel: { showGate = false }
+                 )
+diff --git a/app-store/cozy-brick-blast.md b/app-store/cozy-brick-blast.md
+index c895bbb..ec234e4 100644
+--- a/app-store/cozy-brick-blast.md
++++ b/app-store/cozy-brick-blast.md
+@@ -105,7 +105,28 @@ The app itself does not request names, email addresses, accounts, precise locati
+ 
+ ## Review notes
+ 
+-Cozy Brick Blast is a brick-breaking game with no login or account. Tap “Got it,” choose a difficulty, then tap “Tap to Play” to begin. Interstitial ads can appear only at natural breaks after completed rounds and never during active play. The Parent Settings screen offers a £2.99 non-consumable “Remove Ads” purchase and “Restore Purchases.” The settings passcode and game progress are stored locally and do not create an account. All music, artwork, and code are original.
++Cozy Brick Blast is a brick-breaking game with no login or account. Tap “Got it,” choose a difficulty, then tap “Tap to Play” to begin.
++
++Parent passcode setup in build 3:
++1. Tap the gear icon in the game header.
++2. On a new installation, “Create Parent Passcode” appears before any validation prompt.
++3. Enter and confirm a four-digit passcode, then tap “Create.”
++4. Parent Settings opens immediately. “Remove Ads” and “Restore Purchases” are available there.
++5. On later visits, the gear icon asks for the saved passcode before opening Parent Settings.
++
++The passcode is stored only on the device and is not an account credential. Interstitial ads can appear only at natural breaks after completed rounds and never during active play. “Remove Ads” is a £2.99 non-consumable purchase. All music, artwork, and code are original.
++
++### Build 3 passcode verification
++
++- [ ] Fresh install shows “Create Parent Passcode” rather than an unlock prompt
++- [ ] Non-four-digit and mismatched entries show an error and do not continue
++- [ ] Matching four-digit entries save successfully and open Parent Settings
++- [ ] Relaunching the app preserves the passcode
++- [ ] Incorrect saved passcode is rejected
++- [ ] Correct saved passcode opens Parent Settings
++- [ ] Changing the passcode requires the current passcode and persists after relaunch
++- [ ] Flow verified on an iPhone simulator/device
++- [ ] Flow verified on an iPad simulator/device
+ 
+ ## Submission checklist
+ 
