@@ -43,7 +43,6 @@ index 0000000..0f8b274
 +            -configuration Debug \
 +            -sdk iphonesimulator \
 +            -destination 'generic/platform=iOS Simulator' \
-+            -derivedDataPath build/BrickBlast \
 +            CODE_SIGNING_ALLOWED=NO \
 +            build
 diff --git a/BrickBlast/BrickBlast.xcodeproj/project.pbxproj b/BrickBlast/BrickBlast.xcodeproj/project.pbxproj
