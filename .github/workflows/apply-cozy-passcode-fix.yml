@@ -41,6 +41,55 @@ jobs:
 
       - name: Commit verified fix
         run: |
+          git add BrickBlast app-store
+          git diff --cached --check
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Fix Cozy Brick Blast first-use passcode setup'
+          git push origin HEAD:codex/fix-cozy-brick-passcode-setup
+name: Apply Cozy Brick Blast passcode fix
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - codex/fix-cozy-brick-passcode-setup
+    paths:
+      - '.github/workflows/apply-cozy-passcode-fix.yml'
+      - '.github/workflows/cozy-passcode-fix.patch'
+
+permissions:
+  contents: write
+
+jobs:
+  apply-build-push:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: codex/fix-cozy-brick-passcode-setup
+
+      - name: Apply reviewed patch
+        run: |
+          git apply --check .github/workflows/cozy-passcode-fix.patch
+          git apply .github/workflows/cozy-passcode-fix.patch
+
+      - name: Build standalone app for iOS Simulator
+        run: |
+          xcodebuild \
+            -project BrickBlast/BrickBlast.xcodeproj \
+            -scheme BrickBlast \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build/BrickBlast \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+      - name: Commit verified fix
+        run: |
           git rm .github/workflows/apply-cozy-passcode-fix.yml
           git rm .github/workflows/cozy-passcode-fix.patch
           git add BrickBlast app-store .github/workflows/build-cozy-brick-blast.yml
