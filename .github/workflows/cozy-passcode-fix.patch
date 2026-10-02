@@ -1,9 +1,9 @@
 diff --git a/.github/workflows/build-cozy-brick-blast.yml b/.github/workflows/build-cozy-brick-blast.yml
 new file mode 100644
-index 0000000..0f8b274
+index 0000000..d268613
 --- /dev/null
 +++ b/.github/workflows/build-cozy-brick-blast.yml
-@@ -0,0 +1,42 @@
+@@ -0,0 +1,41 @@
 +name: Build Cozy Brick Blast
 +
 +on:
